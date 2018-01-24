@@ -16,3 +16,4 @@ or "selecting the destination un-occupied square or capture".
 where each board selects which of the 12 locations they should occupy.
 3. Add an "undo" memory.
 
+![Screenshot](chess3D.png)
