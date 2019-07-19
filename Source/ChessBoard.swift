@@ -35,7 +35,7 @@ let zs3b:Float = z3 + SQHOP * 3
 let pColorW   = "p22.png"
 let pColorB   = "p10.png"
 
-enum PieceKind { case
+enum PieceKind : Int { case
     BP1,BP2,BP3,BP4,BP5,BP6,BP7,BP8,BC1,BC2,BR1,BR2,BB1,BB2,BQQ,BKK, // 8 pawn, 2 castle, 2 rook, 2 bishop, queen, king
     WP1,WP2,WP3,WP4,WP5,WP6,WP7,WP8,WC1,WC2,WR1,WR2,WB1,WB2,WQQ,WKK,
     NON }
@@ -353,7 +353,7 @@ class ChessBoard {
             let kind = startingPieceLocations[s]
             square[s].kind = kind
             if kind != .NON {
-                let index:Int = kind.hashValue
+                let index:Int = kind.rawValue
                 piece[index].node.position = square[s].node.position
             }
         }
@@ -388,7 +388,7 @@ class ChessBoard {
             
             let kind = square[baseIndex + i].kind  // also move pieces sitting on squares
             if kind != .NON {
-                movePiece(kind.hashValue, destinations[i], animate)
+                movePiece(kind.rawValue, destinations[i], animate)
             }
         }
         
@@ -396,7 +396,7 @@ class ChessBoard {
     }
     
     func arePiecesSameColor(_ srcIndex:Int, _ dstIndex:Int) -> Bool {
-        func isWhite(_ v:PieceKind) -> Bool { return v.hashValue < 16 }
+        func isWhite(_ v:PieceKind) -> Bool { return v.rawValue < 16 }
         return isWhite(square[srcIndex].kind) == isWhite(square[dstIndex].kind)
     }
     
@@ -453,7 +453,7 @@ class ChessBoard {
         let speed:Double = 0.3
         let move1 = SCNAction.move(to:m1, duration:0.2)
         let move2 = SCNAction.move(to:m2, duration:speed)
-        let move3 = SCNAction.move(to:m3, duration:speed + speed * Double(fabs(square[srcIndex].node.position.y - square[dstIndex].node.position.y) / LHT))
+        let move3 = SCNAction.move(to:m3, duration:speed + speed * Double(abs(square[srcIndex].node.position.y - square[dstIndex].node.position.y) / LHT))
         let move4 = SCNAction.move(to:m4, duration:speed)
         let move5 = SCNAction.move(to:m5, duration:0.2)
 
@@ -464,7 +464,7 @@ class ChessBoard {
         let sequence = SCNAction.sequence([move1,move2,move3,move4,move5])
         
         isMoving += 1
-        piece[pKind.hashValue].node.runAction(sequence, completionHandler: { () in self.isMoving -= 1 })
+        piece[pKind.rawValue].node.runAction(sequence, completionHandler: { () in self.isMoving -= 1 })
     }
     
     //MARK: -

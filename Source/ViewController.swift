@@ -19,7 +19,7 @@ class ViewController: UIViewController,SCNSceneRendererDelegate {
         super.viewDidLoad()
         
         scenePtr = SCNScene()        
-        scnView = self.view as! SCNView
+        scnView = self.view as? SCNView
         
         scnView.backgroundColor = UIColor(red:0.1, green:0.1, blue:0.1, alpha:1.0)
         scnView.autoenablesDefaultLighting = true
